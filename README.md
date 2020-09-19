@@ -1,1 +1,1 @@
-Decentralized Covid Tracking
+Decentralized Covid Tracking - HackChennai Project 
