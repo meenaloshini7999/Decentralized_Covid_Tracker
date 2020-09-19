@@ -19,7 +19,6 @@ contract Main
     struct Doctor
     {
         address docAdd;
-        string id;
         string name;
         string workPlace;
         string family;
@@ -78,20 +77,20 @@ contract Main
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
         reporters[_id]=Reporter(_id,_name,_pincode,_famid);
     }
-    function createDoctor(uint _pincode,address _address,string memory _id,string memory _name,string memory _workarea,string memory _famid)
+    function createDoctor(uint _pincode,address _address,string memory _name,string memory _workarea,string memory _famid)
     {
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
-        doctors[_id]=Doctor(_address,_id,_name,_workarea,_famid);
+        doctors[_address]=Doctor(_address,_name,_workarea,_famid);
     }
-    function createFamily(uint _pincode,string memory _name,string memory _id,uint _count,string memory _home,string memory _curr,bool _flag)
+    function createFamily(uint _pincode,string memory _name,string memory _id,uint _count,string memory _home,string memory _curr)
     {
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
-        families[_id]=Family(_name,_id,_count,_home,_curr,_flag);
+        families[_id]=Family(_name,_id,_count,_home,_curr,false);
     }
-    function createFlat(uint _pincode,string memory _id,uint _total,uint _active,string memory _coords)
+    function createFlat(uint _pincode,string memory _id,uint _total,string memory _coords)
     {
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
-        flats[_id]=Flat(_id,_total,_active,_coords);
+        flats[_id]=Flat(_id,_total,0,_coords);
         flatsByPincode[_pincode].push(_id)
     }
     function getFlatsByPin(uint _pincode)
