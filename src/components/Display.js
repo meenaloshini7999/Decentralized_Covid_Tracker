@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Container,Form,InputGroup,Dropdown,DropdownButton} from 'react-bootstrap';
+import {Container,Form,InputGroup,Dropdown,DropdownButton,Button} from 'react-bootstrap';
 import main from './main';
+import CardCustom from './CardCustom'; 
 import './App.css';
 class Display extends Component {
 
@@ -10,14 +11,10 @@ class Display extends Component {
       disp:'Select Search Term',
       iphelp:'',
       id:'',
-      ladmin:false
+      pin:0,
+      arr:[],
+      fam:false
     }
-  }
-
-  checkLAdmin=async ()=>{
-    const pincode=await main.methods.lAdminPincodes(this.props.account).call()
-    if(pincode!==0)
-    this.setState({ladmin:true})
   }
 
   onIdChange=(event)=>{
@@ -35,13 +32,8 @@ class Display extends Component {
       this.setState({disp:'Flat'})
     }
     else{
-      await this.checkLAdmin()
-      if(this.state.ladmin===true){
       this.setState({iphelp:'Search by Smart Card ID'})
       this.setState({disp:'Smart Card ID'})
-      }
-      else
-      alert('Only LocalAdmin can utilize this Search Term!')
     }
   }
 
@@ -59,44 +51,44 @@ class Display extends Component {
   }
 
   onFetchPin=async ()=>{
-    const arr=await main.methods.getFlatsByPin(this.state.id).call()
-    console.log(arr)
+    const array=await main.methods.getFlatsByPin(this.state.id).call()
+    this.setState({arr:array})
   }
 
   onFetchFlat=async ()=>{
-    const arr=await main.methods.getHealthRecordsByFlat(this.state.id).call()
-    console.log(arr)
+    const array=await main.methods.getHealthRecordsByFlat(this.state.id).call()
+    this.setState({arr:array})
+    this.setState({fam:true})
   }
 
   onFetchFamily=async ()=>{
-    const arr=await main.methods.getHealthRecordsByFamily(this.state.id).call()
-    console.log(arr)
+    const array=await main.methods.getHealthRecordsByFamily(this.state.id).call({from:this.state.account})
+    this.setState({arr:array})
+    this.setState({fam:true})
   }
 
 render(){
-  return{
-    <div>
+  return(<div>
     <Container>
       <Form>
         <InputGroup controlId="formBasicEmail">
           <Form.Control type="text" placeholder={this.state.iphelp} onChange={this.onIdChange} />
-          <DropdownButton variant="dark" bsStyle="success" title={this.state.disp} onSelect={this.onOption}>
+          <DropdownButton variant="success" bsStyle="success" title={this.state.disp} onSelect={this.onOption}>
             <Dropdown.Item eventKey="0">Pincode</Dropdown.Item>
             <Dropdown.Item eventKey="1">Flat</Dropdown.Item>
             <Dropdown.Item eventKey="2">Smart Card ID</Dropdown.Item>
           </DropdownButton>
             <InputGroup.Append>
-              <Button variant="dark" onClick={this.onFetch}>
+              <Button className="btn btn-success" onClick={this.onFetch} style={{height:'90%'}}>
               Fetch!
               </Button>
             </InputGroup.Append>
         </InputGroup>
       </Form>
     </Container>
-    </div>
+    <CardCustom arr={this.state.arr} fam={this.state.fam}/>
+    </div>);
   }
-}
-
 }
 
 export default Display;
