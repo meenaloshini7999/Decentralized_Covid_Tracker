@@ -43,6 +43,7 @@ class Doctor extends Component {
   render() {
     return (
       <div>
+      <div className="cusform mt-5">
       <form onSubmit={this.onSignHRecord} >
       <div class="form-group">
       <label for="formGroupExampleInput">Sign HealthRecord:</label>
@@ -51,8 +52,9 @@ class Doctor extends Component {
       <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       <input type="text" class="form-control" placeholder="Type YES if Tested Positive" onChange={this.onFlagChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
+      </div>
       </div>
     );
   }

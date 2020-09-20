@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import {Nav} from 'react-bootstrap';
 import main from './main';
 import './App.css';
 
@@ -111,6 +113,57 @@ class LocalAdmin extends Component {
     alert('Created Record ID: '+this.state.fid+ts)
     await main.methods.createHealthRecord(this.state.pin,this.state.id,this.state.fid,this.state.fid+ts,this.state.disp,ts,this.state.desc).send({from:this.props.account})
   }
+  tabSwitch=(eventKey)=>{
+    if(eventKey==='reporter'){
+      this.setState({reporterForm:'block'})
+      this.setState({DoctorForm:'none'})
+      this.setState({familyForm:'none'})
+      this.setState({flatForm:'none'})
+      this.setState({relocateForm:'none'})
+      this.setState({healthRecForm:'none'})
+     }
+     else if(eventKey==='Doctor'){
+      this.setState({reporterForm:'none'})
+      this.setState({DoctorForm:'block'})
+      this.setState({familyForm:'none'})
+      this.setState({flatForm:'none'})
+      this.setState({relocateForm:'none'})
+      this.setState({healthRecForm:'none'})
+     }
+     else if(eventKey==='family'){
+       this.setState({reporterForm:'none'})
+      this.setState({DoctorForm:'none'})
+      this.setState({familyForm:'block'})
+      this.setState({flatForm:'none'})
+      this.setState({relocateForm:'none'})
+      this.setState({healthRecForm:'none'})
+     }
+     else if(eventKey==='flat'){
+       this.setState({reporterForm:'none'})
+      this.setState({DoctorForm:'none'})
+      this.setState({familyForm:'none'})
+      this.setState({flatForm:'block'})
+      this.setState({relocateForm:'none'})
+      this.setState({healthRecForm:'none'})
+     }
+       else if(eventKey==='relocate'){
+       this.setState({reporterForm:'none'})
+      this.setState({DoctorForm:'none'})
+      this.setState({familyForm:'none'})
+      this.setState({flatForm:'none'})
+      this.setState({relocateForm:'block'})
+      this.setState({healthRecForm:'none'})
+     }
+     else{
+       this.setState({reporterForm:'none'})
+      this.setState({DoctorForm:'none'})
+      this.setState({familyForm:'none'})
+      this.setState({flatForm:'none'})
+      this.setState({relocateForm:'none'})
+      this.setState({healthRecForm:'block'})
+
+     }
+   }
 
   constructor(props) {
     super(props)
@@ -127,24 +180,54 @@ class LocalAdmin extends Component {
       coords:'',
       disp:'',
       desc:'',
-      val:0
+      val:0,
+      reporterForm:'block',
+      DoctorForm:'none',
+      familyForm:'none',
+      flatForm:'none',
+      relocateForm:'none',
+      healthRecForm:'none'
     }
   }
 
   render() {
     return (
       <div>
-      <form onSubmit={this.onCreateReporter} >
+      <div className="bg">
+      <Nav variant="tabs" defaultActiveKey="reporter" onSelect={this.tabSwitch}>
+      <Nav.Item>
+        <Nav.Link eventKey="reporter">Create Reporter</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="Doctor">Create Doctor</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="family">Create Family</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="flat">Create Flat</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="relocate">Relocate Location</Nav.Link>
+      </Nav.Item>
+      <Nav.Item>
+        <Nav.Link eventKey="health">Create Health Record</Nav.Link>
+      </Nav.Item>
+      </Nav>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <div className="cusform ml-15">
+      <form onSubmit={this.onCreateReporter} style={{display:this.state.reporterForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Reporter Creation:</label>
       <input type="text" class="form-control" placeholder="Reporter ID" onChange={this.onIdChange} />
       <input type="text" class="form-control" placeholder="Reporter Name" onChange={this.onNameChange} />
       <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success" />
       </form>
-      <hr/>
-      <form onSubmit={this.onCreateDoctor} >
+
+      <form onSubmit={this.onCreateDoctor} style={{display:this.state.DoctorForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Doctor Creation:</label>
       <input type="text" class="form-control" placeholder="Doctor Address" onChange={this.onAddrChange} />
@@ -152,10 +235,10 @@ class LocalAdmin extends Component {
       <input type="text" class="form-control" placeholder="Working Hostpital" onChange={this.onHospitalChange} />
       <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
-      <hr/>
-      <form onSubmit={this.onCreateFamily} >
+
+      <form onSubmit={this.onCreateFamily} style={{display:this.state.familyForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Family Creation:</label>
       <input type="text" class="form-control" placeholder="Family Name" onChange={this.onNameChange} />
@@ -164,41 +247,43 @@ class LocalAdmin extends Component {
       <input type="text" class="form-control" placeholder="Home Location" onChange={this.onHLocationChange} />
       <input type="text" class="form-control" placeholder="Current Location" onChange={this.onCLocationChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
-      <hr/>
-      <form onSubmit={this.onCreateFlat} >
+
+      <form onSubmit={this.onCreateFlat} style={{display:this.state.flatForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Flat Creation:</label>
       <input type="text" class="form-control" placeholder="Flat Name" onChange={this.onIdChange} />
       <input type="number" class="form-control" placeholder="Person Count" onChange={this.onCountChange} />
       <input type="text" class="form-control" placeholder="Co-ordinates(Latitude,Longtitude)" onChange={this.onCoordChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
-      <hr/>
-      <form onSubmit={this.onRelocate} >
+
+      <form onSubmit={this.onRelocate} style={{display:this.state.relocateForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Relocate:</label>
       <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       <input type="text" class="form-control" placeholder="Location" onChange={this.onCLocationChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit"className="btn btn-success"/>
       </form>
-      <hr/>
-      <form onSubmit={this.onUpdateHRecord} >
+
+      <form onSubmit={this.onUpdateHRecord} style={{display:this.state.healthRecForm}}>
       <div class="form-group">
       <label for="formGroupExampleInput">Health Record:</label>
       <input type="text" class="form-control" placeholder="Flat Name" onChange={this.onIdChange} />
       <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       <p>Temperature Readings (In Celcius):</p>
       <p>{this.state.disp}</p>
-      <input type="number" class="form-control" placeholder="Temperature(in Celcius)" onChange={this.onValChange} />
-      <button onClick={this.onAddTemp}>Add</button>
+      <div className="d-inline-flex"><input type="number" class="form-control" placeholder="Temperature(in Celcius)" onChange={this.onValChange} />
+      <button onClick={this.onAddTemp} style={{height:'95%'}} className="btn btn-success">Add</button></div>
       <input type="text" class="form-control" placeholder="Description" onChange={this.onDescChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
+      </div>
+      </div>
       </div>
     );
   }

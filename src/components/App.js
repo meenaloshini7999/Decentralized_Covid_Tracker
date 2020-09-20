@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import web3 from './web3';
+import {BrowserRouter,Route, Switch} from 'react-router-dom';
 import LocalAdmin from './LocalAdmin';
 import Admin from './Admin';
 import Doctor from './Doctor';
+import Home from './Home';
+import Error from './Error';
 import './App.css';
 
 class App extends Component {
@@ -26,7 +29,24 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Doctor account={this.state.account}/>
+      <BrowserRouter>
+        <Switch>
+        <Route path="/" exact>
+          <Home account={this.state.account}/>
+        </Route>
+        <Route path="/admin">
+          <Admin account={this.state.account}/>
+        </Route>
+        <Route path="/localAdmin">
+          <LocalAdmin account={this.state.account} />
+        </Route>
+        <Route path="/Doctor">
+          <Doctor account={this.state.account}/>
+        </Route>
+
+        <Route component={Error}/>
+        </Switch>
+        </BrowserRouter>
       </div>
     );
   }

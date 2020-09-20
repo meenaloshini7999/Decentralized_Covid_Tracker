@@ -36,6 +36,7 @@ class Admin extends Component {
   render() {
     return (
       <div>
+      <div className="cusform m-5">
       <form onSubmit={this.onCreatelAdmin} >
       <div class="form-group">
       <label for="formGroupExampleInput">LocalAdmin Creation:</label>
@@ -43,8 +44,9 @@ class Admin extends Component {
       <input type="text" class="form-control" placeholder="Aadhaar" onChange={this.onAadhaarChange} />
       <input type="number" class="form-control" placeholder="Pincode" onChange={this.onPinChange} />
       </div>
-      <input type="submit"/>
+      <input type="submit" className="btn btn-success"/>
       </form>
+      </div>
       </div>
     );
   }

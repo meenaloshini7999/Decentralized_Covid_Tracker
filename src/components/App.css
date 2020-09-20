@@ -1,1 +1,20 @@
-/* Styles go here */
+body{
+  background:#EDFFEC;
+}
+
+.cusform
+{
+  /* margin-left: 500px; */
+  width: 500px;background:#48435C;
+  margin-left:510px !important;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 42px 55px 45px 55px;
+  color:#61E786;
+  font-size: 20px;
+}
+
+.form-control
+{
+  margin:5px
+}
