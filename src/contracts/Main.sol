@@ -99,13 +99,14 @@ contract Main
     {
         return(HealthRecordsByFlat[_flat]);
     }
-    function createHealthRecord(string memory _flat,string memory _family,string memory _id,string memory _temp,string memory _date,string memory _desc) public
+    function createHealthRecord(uint _pincode,string memory _flat,string memory _family,string memory _id,string memory _temp,string memory _date,string memory _desc) public
     {
+        require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
         healthRecords[_id]=HealthRecord(_temp,_id,_date,_desc,'');
         familyHealthRecords[_family].push(_id);
         HealthRecordsByFlat[_flat].push(_id);
     }
-    function flagCovidStatus(string memory _hId,string memory _flat,string memory _family,string memory _hRec,bool _stat) public
+    function flagCovidStatus(string memory _hId,string memory _flat,string memory _family,bool _stat) public
     {
         require(doctors[msg.sender].docAdd==msg.sender,"Access denied");
         healthRecords[_hId].doc=doctors[msg.sender].name;

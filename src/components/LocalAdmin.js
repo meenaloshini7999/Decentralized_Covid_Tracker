@@ -54,28 +54,62 @@ class LocalAdmin extends Component {
     this.setState({coords:event.target.value})
   }
 
+  onDescChange=(event)=>{
+    event.preventDefault()
+    this.setState({desc:event.target.value})
+  }
+
+  onValChange=(event)=>{
+    event.preventDefault()
+    this.setState({val:event.target.value})
+  }
+
+  onAddTemp=(event)=>{
+    event.preventDefault()
+    if(this.state.val!==''){
+    let val=this.state.disp
+    if(val!=='')
+    val=val+','
+    this.setState({disp:val+this.state.val})
+  }
+  }
+
   onCreateReporter=async (event)=>{
     event.preventDefault()
-    this.setPin()
+    await this.setPin()
     await main.methods.createReporter(this.state.id,this.state.name,this.state.pin,this.state.fid).send({from:this.props.account})
   }
 
   onCreateDoctor=async (event)=>{
     event.preventDefault()
-    this.setPin()
+    await this.setPin()
     await main.methods.createDoctor(this.state.pin,this.state.addr,this.state.name,this.state.hos,this.state.fid).send({from:this.props.account})
   }
 
   onCreateFamily=async (event)=>{
     event.preventDefault()
-    this.setPin()
+    await this.setPin()
     await main.methods.createFamily(this.state.pin,this.state.name,this.state.fid,this.state.count,this.state.home,this.state.curr).send({from:this.props.account})
   }
 
   onCreateFlat=async (event)=>{
     event.preventDefault()
-    this.setPin()
+    await this.setPin()
     await main.methods.createFlat(this.state.pin,this.state.id,this.state.count,this.state.coords).send({from:this.props.account})
+  }
+
+  onRelocate=async (event)=>{
+    event.preventDefault()
+    await this.setPin()
+    await main.methods.relocation(this.state.pin,this.state.curr,this.state.fid).send({from:this.props.account})
+  }
+
+  onUpdateHRecord=async (event)=>{
+    event.preventDefault()
+    await this.setPin()
+    let ts=Date.now().toString()
+    alert('Created Record ID: '+this.state.fid+ts)
+    await main.methods.createHealthRecord(this.state.pin,this.state.id,this.state.fid,this.state.fid+ts,this.state.disp,ts,this.state.desc).send({from:this.props.account})
   }
 
   constructor(props) {
@@ -90,7 +124,10 @@ class LocalAdmin extends Component {
       home:'',
       curr:'',
       count:0,
-      coords:''
+      coords:'',
+      disp:'',
+      desc:'',
+      val:0
     }
   }
 
@@ -102,7 +139,7 @@ class LocalAdmin extends Component {
       <label for="formGroupExampleInput">Reporter Creation:</label>
       <input type="text" class="form-control" placeholder="Reporter ID" onChange={this.onIdChange} />
       <input type="text" class="form-control" placeholder="Reporter Name" onChange={this.onNameChange} />
-      <input type="text" class="form-control" placeholder="Smart Card Number" onChange={this.onFIdChange} />
+      <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       </div>
       <input type="submit"/>
       </form>
@@ -113,7 +150,7 @@ class LocalAdmin extends Component {
       <input type="text" class="form-control" placeholder="Doctor Address" onChange={this.onAddrChange} />
       <input type="text" class="form-control" placeholder="Doctor Name" onChange={this.onNameChange} />
       <input type="text" class="form-control" placeholder="Working Hostpital" onChange={this.onHospitalChange} />
-      <input type="text" class="form-control" placeholder="Smart Card Number" onChange={this.onFIdChange} />
+      <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       </div>
       <input type="submit"/>
       </form>
@@ -122,7 +159,7 @@ class LocalAdmin extends Component {
       <div class="form-group">
       <label for="formGroupExampleInput">Family Creation:</label>
       <input type="text" class="form-control" placeholder="Family Name" onChange={this.onNameChange} />
-      <input type="text" class="form-control" placeholder="Smart Card Number" onChange={this.onFIdChange} />
+      <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
       <input type="number" class="form-control" placeholder="Number of Family Members" onChange={this.onCountChange} />
       <input type="text" class="form-control" placeholder="Home Location" onChange={this.onHLocationChange} />
       <input type="text" class="form-control" placeholder="Current Location" onChange={this.onCLocationChange} />
@@ -136,6 +173,29 @@ class LocalAdmin extends Component {
       <input type="text" class="form-control" placeholder="Flat Name" onChange={this.onIdChange} />
       <input type="number" class="form-control" placeholder="Person Count" onChange={this.onCountChange} />
       <input type="text" class="form-control" placeholder="Co-ordinates(Latitude,Longtitude)" onChange={this.onCoordChange} />
+      </div>
+      <input type="submit"/>
+      </form>
+      <hr/>
+      <form onSubmit={this.onRelocate} >
+      <div class="form-group">
+      <label for="formGroupExampleInput">Relocate:</label>
+      <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
+      <input type="text" class="form-control" placeholder="Location" onChange={this.onCLocationChange} />
+      </div>
+      <input type="submit"/>
+      </form>
+      <hr/>
+      <form onSubmit={this.onUpdateHRecord} >
+      <div class="form-group">
+      <label for="formGroupExampleInput">Health Record:</label>
+      <input type="text" class="form-control" placeholder="Flat Name" onChange={this.onIdChange} />
+      <input type="text" class="form-control" placeholder="Smart Card ID" onChange={this.onFIdChange} />
+      <p>Temperature Readings (In Celcius):</p>
+      <p>{this.state.disp}</p>
+      <input type="number" class="form-control" placeholder="Temperature(in Celcius)" onChange={this.onValChange} />
+      <button onClick={this.onAddTemp}>Add</button>
+      <input type="text" class="form-control" placeholder="Description" onChange={this.onDescChange} />
       </div>
       <input type="submit"/>
       </form>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import web3 from './web3';
 import LocalAdmin from './LocalAdmin';
+import Admin from './Admin';
+import Doctor from './Doctor';
 import './App.css';
 
 class App extends Component {
@@ -24,7 +26,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <LocalAdmin accounts={this.state.account}/>
+        <Doctor account={this.state.account}/>
       </div>
     );
   }
