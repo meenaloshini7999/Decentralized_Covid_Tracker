@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Display from './Display';
 
 class Home extends Component{
   render(){
     return(
-      <div>{this.props.account}</div>
+      <div>
+      <Display account={this.props.account}/>
+      </div>
     )
   }
 }

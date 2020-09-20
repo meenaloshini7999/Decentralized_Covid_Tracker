@@ -99,6 +99,10 @@ contract Main
     {
         return(HealthRecordsByFlat[_flat]);
     }
+    function getHealthRecordsByFamily(string memory _family) public view returns(string [] memory)
+    {
+        return(familyHealthRecords[_family]);
+    }
     function createHealthRecord(uint _pincode,string memory _flat,string memory _family,string memory _id,string memory _temp,string memory _date,string memory _desc) public
     {
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
