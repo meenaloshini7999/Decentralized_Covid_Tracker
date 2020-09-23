@@ -6,6 +6,7 @@ import Admin from './Admin';
 import Doctor from './Doctor';
 import Home from './Home';
 import Error from './Error';
+import Navbar from './Navbar';
 import './App.css';
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
   render() {
     return (
       <div>
+      <Navbar/>
       <BrowserRouter>
         <Switch>
         <Route path="/" exact>

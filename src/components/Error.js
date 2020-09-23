@@ -10,9 +10,11 @@ class Error extends Component {
 }
 
   render(){
-    return(<div>)
-    Error!
-    </div>);
+    return(
+      <div class="boxed" style={{marginLeft:'500px'}}>
+      <h1>Error 404. Page Doesn't exist!</h1>
+    </div>
+    );
   }
 }
 

@@ -43,7 +43,7 @@ class Doctor extends Component {
   render() {
     return (
       <div>
-      <div className="cusform mt-5">
+      <div className="cusform boxed">
       <form onSubmit={this.onSignHRecord} >
       <div class="form-group">
       <label for="formGroupExampleInput">Sign HealthRecord:</label>

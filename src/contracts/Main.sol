@@ -55,6 +55,7 @@ contract Main
     mapping(string=>Flat) public flats;
     mapping(address=>Doctor) public doctors;
     mapping(string=>Reporter) public reporters;
+    mapping(uint=>string[]) public reportersByPincode;
     mapping(uint=>localAdmin) public lAdmins;
     mapping(address=>uint) public lAdminPincodes;
     mapping(string=>string[]) public familyHealthRecords;
@@ -74,6 +75,7 @@ contract Main
     {
         require(lAdmins[_pincode].ladminadd==msg.sender,"Access Denied");
         reporters[_id]=Reporter(_id,_name,_pincode,_famid);
+        reportersByPincode[_pincode].push(_id);
     }
     function createDoctor(uint _pincode,address _address,string memory _name,string memory _workarea,string memory _famid) public
     {
@@ -102,6 +104,10 @@ contract Main
     function getHealthRecordsByFamily(string memory _family) public view returns(string [] memory)
     {
         return(familyHealthRecords[_family]);
+    }
+    function getReporterByPincode(uint _pincode) public view returns(string [] memory)
+    {
+        return (reportersByPincode[_pincode]);
     }
     function createHealthRecord(uint _pincode,string memory _flat,string memory _family,string memory _id,string memory _temp,string memory _date,string memory _desc) public
     {

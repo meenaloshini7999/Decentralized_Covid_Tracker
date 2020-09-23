@@ -36,7 +36,7 @@ class Admin extends Component {
   render() {
     return (
       <div>
-      <div className="cusform m-5">
+      <div className="cusform boxed">
       <form onSubmit={this.onCreatelAdmin} >
       <div class="form-group">
       <label for="formGroupExampleInput">LocalAdmin Creation:</label>

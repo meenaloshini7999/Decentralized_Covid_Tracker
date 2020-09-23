@@ -1,5 +1,7 @@
 body{
-  background:#EDFFEC;
+  background:url('./covid.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .cusform
@@ -17,4 +19,17 @@ body{
 .form-control
 {
   margin:5px
+}
+
+button
+{
+  margin-top:5px !important;
+}
+
+.boxed{
+  margin-top:180px !important;
+}
+
+a{
+  color:#61E786;
 }

@@ -194,9 +194,9 @@ class LocalAdmin extends Component {
     return (
       <div>
       <div className="bg">
-      <Nav variant="tabs" defaultActiveKey="reporter" onSelect={this.tabSwitch}>
+      <Nav variant="tabs" defaultActiveKey="reporter" onSelect={this.tabSwitch} style={{background:'black',marginBottom:'75px'}} id='txt'>
       <Nav.Item>
-        <Nav.Link eventKey="reporter">Create Reporter</Nav.Link>
+        <Nav.Link eventKey="reporter" >Create Reporter</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link eventKey="Doctor">Create Doctor</Nav.Link>
